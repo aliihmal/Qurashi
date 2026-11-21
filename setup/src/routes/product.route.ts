@@ -22,7 +22,10 @@ route.route("/")
         upload.single("image"),
         asyncHandler(productcontroller.create.bind(productcontroller))
     );
-route.route("/ ")
+route.route("/")
+     .get(asyncHandler(productcontroller.getAllProduct.bind(productcontroller)));
+
+route.route("/getAllProduct")
      .get(asyncHandler(productcontroller.getAllProduct.bind(productcontroller)));
 
 route.route("/get/:id")

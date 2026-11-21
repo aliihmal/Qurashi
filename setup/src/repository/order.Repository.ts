@@ -42,6 +42,9 @@ export class orderRepository implements Initializabel,IRpository<Order>{
     }
     async createWithCart(item:Order,ids:string[]):Promise<id>{
         const conn = await ConnectionManager.getConnection();
+        // Injected repositories skip init() in the getters, so ensure tables exist.
+        await (await this.getCarRepo()).init();
+        await (await this.getCartOrderRepo()).init();
         try{
             await conn.exec("BEGIN TRANSACTION");
             await conn.run(CREATE_ORDER,[item.id,item.userId,item.price])
