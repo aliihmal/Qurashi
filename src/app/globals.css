@@ -1,26 +1,222 @@
 @import "tailwindcss";
 
+/* ==========================================
+   QURASHI BRAND DESIGN SYSTEM
+   Default: Dark Luxury
+========================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  /* Brand Colors */
+  --primary: #b9954b;
+  --secondary: #d8be84;
+  --accent: #4a1719;
+  --navy: #152638;
+
+  /* Backgrounds */
+  --background: #090909;
+  --foreground: #f7f3eb;
+  --surface: #171717;
+  --surface-muted: #242424;
+
+  /* Text */
+  --text-primary: #f7f3eb;
+  --text-secondary: #b8afa2;
+  --text-muted: #928b80;
+
+  /* Borders */
+  --border: #39332a;
+
+  /* Status Colors */
+  --success: #65b889;
+  --warning: #e4b75c;
+  --error: #e77c7c;
+  --info: #7faee3;
 }
+
+/* Future light theme - not active */
+.light {
+  color-scheme: light;
+
+  --primary: #80632d;
+  --secondary: #a17d3e;
+  --accent: #67292b;
+  --navy: #152638;
+
+  --background: #f7f3eb;
+  --foreground: #171717;
+  --surface: #ffffff;
+  --surface-muted: #eee8dd;
+
+  --text-primary: #171717;
+  --text-secondary: #57514a;
+  --text-muted: #6f685e;
+
+  --border: #dcd2c2;
+
+  --success: #27845a;
+  --warning: #a56b16;
+  --error: #c43d3d;
+  --info: #3274b9;
+}
+
+/* ==========================================
+   TAILWIND V4 TOKENS
+========================================== */
 
 @theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-navy: var(--navy);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-border: var(--border);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+
+  /* Compatibility aliases for existing components */
+  --color-ivory: var(--foreground);
+  --color-ink: var(--foreground);
+  --color-ink-soft: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-sand: var(--surface-muted);
+  --color-linen: var(--border);
+  --color-gold: var(--primary);
+  --color-gold-light: var(--secondary);
+  --color-gold-dark: var(--primary);
+  --color-clay: var(--error);
+  --color-white: var(--surface);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
+  --shadow-lift: 0 4px 12px rgb(0 0 0 / 0.35), 0 16px 40px rgb(0 0 0 / 0.4);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ==========================================
+   GLOBAL STYLES
+========================================== */
+
+body {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+
+/* Custom cursor — hide native cursor on precise pointers only */
+@media (pointer: fine) {
+  html.custom-cursor,
+  html.custom-cursor * {
+    cursor: none !important;
+  }
+  html.custom-cursor input,
+  html.custom-cursor textarea,
+  html.custom-cursor select,
+  html.custom-cursor [contenteditable] {
+    cursor: text !important;
   }
 }
 
-body {
+::selection {
+  background: var(--primary);
+  color: var(--background);
+}
+
+/* Thin luxury scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* Hairline gold rule */
+.gold-rule {
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  height: 1px;
+}
+
+/* Cinematic blended backdrop — slow drifting light */
+@keyframes drift-a {
+  0%, 100% { transform: translate3d(-8%, -6%, 0) scale(1); }
+  50% { transform: translate3d(6%, 8%, 0) scale(1.15); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate3d(10%, 4%, 0) scale(1.1); }
+  50% { transform: translate3d(-6%, -8%, 0) scale(0.95); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate3d(0, 10%, 0) scale(1); }
+  50% { transform: translate3d(4%, -6%, 0) scale(1.2); }
+}
+.blend-a { animation: drift-a 26s ease-in-out infinite; }
+.blend-b { animation: drift-b 32s ease-in-out infinite; }
+.blend-c { animation: drift-c 38s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .blend-a, .blend-b, .blend-c {
+    animation: none;
+  }
+}
+
+/* Outlined display type */
+.text-outline {
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--primary) 55%, transparent);
+  color: transparent;
+}
+
+/* Slow rotation for ornamental marks */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 40s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin-slow {
+    animation: none;
+  }
 }
